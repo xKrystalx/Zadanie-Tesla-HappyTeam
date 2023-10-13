@@ -22,7 +22,7 @@ export function Home() {
           </svg>
           <p>Rent your own Tesla right now by clicking the button below!</p>
         </div>
-        <button className="" onClick={scrollToLocation}>
+        <button className="custom-button-red" onClick={scrollToLocation}>
           Select one of our locations
         </button>
       </div>

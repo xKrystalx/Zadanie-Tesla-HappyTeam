@@ -10,7 +10,7 @@
     scroll-behavior: smooth;
   }
 
-  button {
+  .custom-button-red {
     transition: border 100ms ease-in;
     background-color: #ee1313;
     padding: 12px 20px 12px 20px;

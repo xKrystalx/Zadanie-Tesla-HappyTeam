@@ -20,7 +20,7 @@ export function Location() {
                 position={loc.position}
                 key={loc.id}
                 selectCallback={() => {
-                  setCurrentLocation(loc.id);
+                  setCurrentLocation(loc);
                 }}
               />
             ))}

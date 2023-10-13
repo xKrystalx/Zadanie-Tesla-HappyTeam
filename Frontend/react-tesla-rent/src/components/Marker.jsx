@@ -34,7 +34,10 @@ export function Marker({ id, name, position, selectCallback }) {
       >
         <div className="flex flex-col gap-3 p-2 items-center">
           <p className="font-semibold">{name}</p>
-          <button className="px-2 py-1 text-sm w-full" onClick={selectCallback}>
+          <button
+            className="custom-button-red px-2 py-1 text-sm w-full"
+            onClick={selectCallback}
+          >
             Select
           </button>
         </div>
