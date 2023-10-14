@@ -1,0 +1,38 @@
+[
+  {
+    "id": "model_s",
+    "name": "Model S",
+    "details": {
+      "range": 400
+    },
+    "price": 200,
+    "available": 3
+  },
+  {
+    "id": "model_y",
+    "name": "Model Y",
+    "details": {
+      "range": 350
+    },
+    "price": 150,
+    "available": 0
+  },
+  {
+    "id": "model_3",
+    "name": "Model 3",
+    "details": {
+      "range": 250
+    },
+    "price": 100,
+    "available": 1
+  },
+  {
+    "id": "model_x",
+    "name": "Model X",
+    "details": {
+      "range": 300
+    },
+    "price": 175,
+    "available": 5
+  }
+]

@@ -3,6 +3,7 @@ import { useImmer } from "use-immer";
 import IconExit from "../assets/images/icons/x-lg.svg";
 import { Calendar } from "./Calendar";
 import { CarSelection } from "./CarSelection";
+import { ReservationDetails } from "./ReservationDetails";
 
 export function ReservationView({ location, setLocation }) {
   const [currentView, setCurrentView] = useState("calendar");
@@ -28,13 +29,33 @@ export function ReservationView({ location, setLocation }) {
   }, []);
 
   function handleCalendarStepCompleted(pickupDate, returnDate) {
-    console.log("Hiii");
+    console.log(`Calendar step completed: ${pickupDate} - ${returnDate}`);
     setReservationDetails(draft => {
       draft.pickupDate = pickupDate;
       draft.returnDate = returnDate;
     });
 
     setCurrentView("car_select");
+  }
+
+  function handleCarSelectionStepCompleted(selectedCar) {
+    console.log(`Car selecttion step completed: ${selectedCar.name}`);
+    //Calculate renting days. If returning same day, count as 1, therefore adding 1 to the difference.
+    let duration =
+      (reservationDetails.returnDate - reservationDetails.pickupDate) /
+        (1000 * 3600 * 24) +
+      1;
+    console.log(`Duration: ${duration}`);
+    console.log(
+      `Total: $${duration * selectedCar.price} [$${
+        selectedCar.price
+      } * ${duration} days]`
+    );
+    setReservationDetails(draft => {
+      draft.carId = selectedCar.id;
+      draft.total = duration * selectedCar.price;
+    });
+    setCurrentView("client_details");
   }
 
   return (
@@ -51,7 +72,10 @@ export function ReservationView({ location, setLocation }) {
           handleNext={handleCalendarStepCompleted}
         />
       )}
-      {currentView == "car_select" && <CarSelection />}
+      {currentView == "car_select" && (
+        <CarSelection handleNext={handleCarSelectionStepCompleted} />
+      )}
+      {currentView == "client_details" && <ReservationDetails />}
     </div>
   );
 }
