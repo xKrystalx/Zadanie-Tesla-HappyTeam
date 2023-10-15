@@ -4,6 +4,7 @@ import IconExit from "../assets/images/icons/x-lg.svg";
 import { Calendar } from "./Calendar";
 import { CarSelection } from "./CarSelection";
 import { ReservationDetails } from "./ReservationDetails";
+import { ReservationSummary } from "./ReservationSummary";
 
 export function ReservationView({ location, setLocation }) {
   const [currentView, setCurrentView] = useState("calendar");
@@ -12,8 +13,9 @@ export function ReservationView({ location, setLocation }) {
     pickupDate: null,
     returnDate: null,
     carId: null,
+    carName: null,
     clientDetails: {
-      name: "",
+      firstName: "",
       lastName: "",
       email: "",
       phone: "",
@@ -53,9 +55,21 @@ export function ReservationView({ location, setLocation }) {
     );
     setReservationDetails(draft => {
       draft.carId = selectedCar.id;
+      draft.carName = selectedCar.name;
       draft.total = duration * selectedCar.price;
     });
     setCurrentView("client_details");
+  }
+
+  function handleReservationDetailsStepCompleted(clientDetails) {
+    console.log(
+      `Reservation details step completed: ${clientDetails.firstName}\n${clientDetails.lastName}\n${clientDetails.email}\n${clientDetails.phone}`
+    );
+    setReservationDetails(draft => {
+      draft.clientDetails = clientDetails;
+    });
+
+    setCurrentView("reservation_summary");
   }
 
   return (
@@ -75,7 +89,14 @@ export function ReservationView({ location, setLocation }) {
       {currentView == "car_select" && (
         <CarSelection handleNext={handleCarSelectionStepCompleted} />
       )}
-      {currentView == "client_details" && <ReservationDetails />}
+      {currentView == "client_details" && (
+        <ReservationDetails
+          handleNext={handleReservationDetailsStepCompleted}
+        />
+      )}
+      {currentView == "reservation_summary" && (
+        <ReservationSummary reservationDetails={reservationDetails} />
+      )}
     </div>
   );
 }

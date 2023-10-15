@@ -5,7 +5,7 @@ export function CarSelection({ handleNext }) {
   const [selectedCar, setSelectedCar] = useState(null);
 
   return (
-    <div className="CarSelection h-full py-24 px-8 flex flex-col">
+    <div className="CarSelection h-full py-24 px-8 flex flex-col overflow-scroll">
       <div className="flex flex-wrap gap-6 justify-center h-fit">
         {Cars.map(car => {
           let isAvailable = car.available > 0;
@@ -16,7 +16,9 @@ export function CarSelection({ handleNext }) {
           return (
             <div
               key={car.id}
-              className={`w-56 h-fit border-2 shadow-lg rounded-lg p-4 flex flex-col ${isSelected}`}
+              className={`w-56 h-fit border-2 shadow-lg rounded-lg p-4 flex flex-col ${isSelected} ${
+                isAvailable ? "" : "opacity-40 bg-gray-200"
+              }`}
             >
               <img src={`/images/${car.id}.png`} className="" />
               <div className="flex flex-col gap-y-2 justify-start w-full mt-2">
@@ -42,6 +44,7 @@ export function CarSelection({ handleNext }) {
                 </p>
                 <button
                   onClick={() => {
+                    if (!isAvailable) return;
                     setSelectedCar(car);
                   }}
                   className="custom-button-red px-3 py-2 text-sm mr-0 ml-auto"
@@ -54,7 +57,10 @@ export function CarSelection({ handleNext }) {
         })}
       </div>
       <button
-        onClick={() => handleNext(selectedCar)}
+        onClick={() => {
+          if (!selectedCar) return;
+          handleNext(selectedCar);
+        }}
         className="custom-button-red w-fit mt-16 self-end mr-8 px-8"
       >
         Next
