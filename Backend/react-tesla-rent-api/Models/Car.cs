@@ -22,5 +22,5 @@ public class Car{
     [Range(0, Int32.MaxValue)]
     public int Available {get;set;}
 
-    public ICollection<Reservation> Reservations {get;} = new List<Reservation>();
+    public virtual ICollection<Reservation> Reservations {get;} = new List<Reservation>();
 }

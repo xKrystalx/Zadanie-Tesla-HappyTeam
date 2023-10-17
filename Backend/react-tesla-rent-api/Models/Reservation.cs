@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace react_tesla_rent_api.Models;
 
 public class ReservationDTO{
-    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Key]
     public int Id {get;set;}
 
     [Required]
