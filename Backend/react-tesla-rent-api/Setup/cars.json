@@ -1,0 +1,30 @@
+[
+  {
+    "Id": "model_s",
+    "Name": "Model S",
+    "Range": 400,
+    "Price": 200,
+    "Available": 3
+  },
+  {
+    "Id": "model_y",
+    "Name": "Model Y",
+    "Range": 350,
+    "Price": 150,
+    "Available": 0
+  },
+  {
+    "Id": "model_3",
+    "Name": "Model 3",
+    "Range": 250,
+    "Price": 100,
+    "Available": 1
+  },
+  {
+    "Id": "model_x",
+    "Name": "Model X",
+    "Range": 300,
+    "Price": 175,
+    "Available": 5
+  }
+]

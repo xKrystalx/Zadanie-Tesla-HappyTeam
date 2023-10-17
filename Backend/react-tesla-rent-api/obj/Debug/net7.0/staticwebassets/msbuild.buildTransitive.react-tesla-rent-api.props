@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\react-tesla-rent-api.props" />
+</Project>

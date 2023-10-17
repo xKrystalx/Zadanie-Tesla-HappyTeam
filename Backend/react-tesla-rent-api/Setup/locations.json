@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "palma_airport",
+    "Name": "Palma Airport"
+  },
+  {
+    "Id": "palma_city_center",
+    "Name": "Palma City Center"
+  },
+  {
+    "Id": "alcudia",
+    "Name": "Alcudia"
+  },
+  {
+    "Id": "manacor",
+    "Name": "Manacor"
+  }
+]
