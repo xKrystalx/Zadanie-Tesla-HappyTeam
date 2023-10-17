@@ -22,13 +22,32 @@ namespace react_tesla_rent_api.Controllers
 
         // GET: api/Cars
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Car>>> GetCars()
+        public async Task<ActionResult<IEnumerable<Car>>> GetCars([FromQuery]string pickupDate = "", [FromQuery]string returnDate = "")
         {
           if (_context.Cars == null)
           {
               return NotFound();
           }
-            return await _context.Cars.ToListAsync();
+
+          var cars = await _context.Cars.ToListAsync();
+
+            if(pickupDate != "" && returnDate != ""){
+                DateOnly t_pickupDate = DateOnly.Parse(pickupDate);
+                DateOnly t_returnDate = DateOnly.Parse(returnDate);
+
+                foreach(var car in cars){
+                    var unavailableCars = await _context.Reservations.CountAsync(i => 
+                                                                                car.Id == i.CarId && 
+                                                                                t_pickupDate <= i.ReturnDate && 
+                                                                                t_pickupDate >= i.PickupDate);
+                    if(unavailableCars >= car.Available){
+                        //Don't save to the database, but we can assign it here to pass onto the frontend
+                        car.Available = 0;
+                    }
+                }
+            }
+
+            return cars;
         }
 
         // GET: api/Cars/5

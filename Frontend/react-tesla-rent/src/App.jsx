@@ -1,14 +1,18 @@
 import { Home } from "./views/Home";
 import { Location } from "./views/Location";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import moment from "moment-timezone";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault("Europe/Madrid");
 
 function App() {
-  moment.tz.setDefault("Europe/Spain");
-
   return (
-    <LocalizationProvider dateAdapter={AdapterMoment} dateLibInstance={moment}>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Home />
       <Location />
     </LocalizationProvider>

@@ -53,7 +53,6 @@ namespace react_tesla_rent_api.Controllers
                 PhoneNumber = reservationDTO.PhoneNumber,
                 PickupDate = reservationDTO.PickupDate,
                 ReturnDate = reservationDTO.ReturnDate,
-                Total = reservationDTO.Total,
                 CarId = reservationDTO.CarId,
                 LocationId = reservationDTO.LocationId
             };
@@ -63,12 +62,28 @@ namespace react_tesla_rent_api.Controllers
                 return Problem("Selected model does not exist.");
             }
 
+            if(car.Available <= 0){
+                return Problem("Selected model is no longer available");
+            }
+
             var location = await _context.Locations.FindAsync(reservationDTO.LocationId);
             if(location == null){
                 return Problem("Selected location does not exist.");
             }
 
+            //Double checking that we're not renting out more than we can
+            var unavailableCars = await _context.Reservations.CountAsync(i => 
+                                                                        reservationDTO.CarId == i.CarId && 
+                                                                        reservationDTO.PickupDate <= i.ReturnDate && 
+                                                                        reservationDTO.PickupDate >= i.PickupDate);
+            if(unavailableCars >= car.Available){
+                return Problem("No available cars.");
+            }
+
             reservation.Car = car;
+
+            //+1 to count the pickup date
+            reservation.Total = car.Price * (reservation.ReturnDate.DayNumber - reservation.PickupDate.DayNumber + 1);
             reservation.Location = location;
 
             _context.Reservations.Add(reservation);

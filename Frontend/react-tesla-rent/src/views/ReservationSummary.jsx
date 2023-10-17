@@ -1,9 +1,63 @@
-import moment from "moment";
+import dayjs from "dayjs";
 import { useState } from "react";
+import loadingSVG from "../assets/images/icons/loading.svg";
+import { ApiEndpoints } from "../helpers/ApiEndpoints";
 
 export function ReservationSummary({ reservationDetails }) {
   //sending, error, success
-  const [reservationState, setReservationState] = useState(null);
+  const [reservationState, setReservationState] = useState("");
+
+  function handlePlaceReservation() {
+    const placeReservation = async () => {
+      return await fetch(ApiEndpoints.apiReservationsUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: reservationDetails.firstName,
+          lastName: reservationDetails.lastName,
+          email: reservationDetails.email,
+          phoneNumber: reservationDetails.phone,
+          pickupDate: reservationDetails.pickupDate,
+          returnDate: reservationDetails.returnDate,
+          carId: reservationDetails.carId,
+          locationId: reservationDetails.location.id,
+        }),
+      });
+    };
+
+    setTimeout(() => {
+      placeReservation()
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          console.log(data);
+          setReservationState("success");
+        })
+        .catch(error => {
+          console.log(error);
+          setReservationState("error");
+        });
+    }, 2000);
+  }
+
+  let buttonState = getButtonState();
+
+  function getButtonState() {
+    switch (reservationState) {
+      case "sending": {
+        return <img src={loadingSVG} className="h-full w-[48px]" />;
+      }
+      case "success": {
+        return <p>Success</p>;
+      }
+      default: {
+        return <p>Place Reservation</p>;
+      }
+    }
+  }
 
   return (
     <div className="ReservationSummary w-full h-full flex justify-center items-center">
@@ -25,30 +79,30 @@ export function ReservationSummary({ reservationDetails }) {
         <div className="flex gap-x-8">
           <p className="flex flex-col">
             <span className="font-semibold text-sm">Pickup Date</span>
-            {moment(reservationDetails.pickupDate).format("L")}
+            {dayjs(reservationDetails.pickupDate).format("DD/MM/YYYY")}
           </p>
           <p className="flex flex-col">
             <span className="font-semibold text-sm">Return Date</span>
-            {moment(reservationDetails.returnDate).format("L")}
+            {dayjs(reservationDetails.returnDate).format("DD/MM/YYYY")}
           </p>
         </div>
         <div className="flex gap-x-8">
           <p className="flex flex-col">
             <span className="font-semibold text-sm">First Name</span>
-            {reservationDetails.clientDetails.firstName}
+            {reservationDetails.firstName}
           </p>
           <p className="flex flex-col">
             <span className="font-semibold text-sm">Last Name</span>
-            {reservationDetails.clientDetails.lastName}
+            {reservationDetails.lastName}
           </p>
         </div>
         <p className="flex flex-col">
           <span className="font-semibold text-sm">E-mail</span>
-          {reservationDetails.clientDetails.email}
+          {reservationDetails.email}
         </p>
         <p className="flex flex-col">
           <span className="font-semibold text-sm">Phone</span>
-          {reservationDetails.clientDetails.phone}
+          {reservationDetails.phone}
         </p>
         <hr />
         <div className="flex">
@@ -56,14 +110,29 @@ export function ReservationSummary({ reservationDetails }) {
             <span className="font-semibold">Total:</span>$
             {reservationDetails.total}
           </p>
-          <button
-            onClick={() => {
-              /*TODO Send reservation details to DB*/
-            }}
-            className="custom-button-red ml-auto"
-          >
-            Place reservation
-          </button>
+          <div className="flex flex-col ml-auto relative items-center">
+            <button
+              onClick={() => {
+                setReservationState("sending");
+                handlePlaceReservation();
+              }}
+              disabled={
+                reservationState == "sending" || reservationState == "success"
+              }
+              className={`custom-button-red h-full px-12 py-0 ${
+                reservationState == "sending" || reservationState == "success"
+                  ? "bg-red-400"
+                  : ""
+              }`}
+            >
+              {buttonState ?? null}
+            </button>
+            {reservationState == "error" && (
+              <p className="text-red-400 text-xs absolute -bottom-8">
+                Please try again or refresh
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>

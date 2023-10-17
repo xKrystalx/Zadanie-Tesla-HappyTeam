@@ -61,9 +61,16 @@ export function ReservationDetails({ handleNext }) {
         </div>
         <TextField
           required
-          error={clientDetails.email.length <= 0}
+          error={
+            clientDetails.email.length <= 0 ||
+            !clientDetails.email.match("^[A-Za-z0-9+_.-]+@(.+)$")
+          }
           helperText={
-            clientDetails.email.length <= 0 ? "Field cannot be empty" : null
+            clientDetails.email.length <= 0
+              ? "Field cannot be empty"
+              : null || !clientDetails.email.match("^[A-Za-z0-9+_.-]+@(.+)$")
+              ? "Incorrect e-mail formatting"
+              : null
           }
           name="email"
           id="outlined-required"

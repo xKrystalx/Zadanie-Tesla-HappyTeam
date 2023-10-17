@@ -30,7 +30,6 @@ public class ReservationDTO{
     [DataType(DataType.Date)]
     public DateOnly ReturnDate {get;set;}
 
-    [Required]
     [DataType(DataType.Currency)]
     public decimal Total {get;set;}
 

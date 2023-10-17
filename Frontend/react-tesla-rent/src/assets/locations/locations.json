@@ -1,7 +1,6 @@
 [
   {
     "id": "palma_airport",
-    "name": "Palma Airport",
     "position": {
       "x": 38,
       "y": 52
@@ -9,7 +8,6 @@
   },
   {
     "id": "palma_city_center",
-    "name": "Palma City Center",
     "position": {
       "x": 33,
       "y": 49
@@ -17,7 +15,6 @@
   },
   {
     "id": "alcudia",
-    "name": "Alcudia",
     "position": {
       "x": 65,
       "y": 16
@@ -25,7 +22,6 @@
   },
   {
     "id": "manacor",
-    "name": "Manacor",
     "position": {
       "x": 73,
       "y": 44

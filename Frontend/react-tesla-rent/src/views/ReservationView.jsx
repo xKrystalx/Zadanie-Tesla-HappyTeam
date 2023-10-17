@@ -5,6 +5,7 @@ import { Calendar } from "./Calendar";
 import { CarSelection } from "./CarSelection";
 import { ReservationDetails } from "./ReservationDetails";
 import { ReservationSummary } from "./ReservationSummary";
+import dayjs from "dayjs";
 
 export function ReservationView({ location, setLocation }) {
   const [currentView, setCurrentView] = useState("calendar");
@@ -14,12 +15,10 @@ export function ReservationView({ location, setLocation }) {
     returnDate: null,
     carId: null,
     carName: null,
-    clientDetails: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-    },
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
     total: 0,
   });
 
@@ -33,8 +32,8 @@ export function ReservationView({ location, setLocation }) {
   function handleCalendarStepCompleted(pickupDate, returnDate) {
     console.log(`Calendar step completed: ${pickupDate} - ${returnDate}`);
     setReservationDetails(draft => {
-      draft.pickupDate = pickupDate;
-      draft.returnDate = returnDate;
+      draft.pickupDate = dayjs(pickupDate).format("YYYY-MM-DD");
+      draft.returnDate = dayjs(returnDate).format("YYYY-MM-DD");
     });
 
     setCurrentView("car_select");
@@ -44,7 +43,8 @@ export function ReservationView({ location, setLocation }) {
     console.log(`Car selecttion step completed: ${selectedCar.name}`);
     //Calculate renting days. If returning same day, count as 1, therefore adding 1 to the difference.
     let duration =
-      (reservationDetails.returnDate - reservationDetails.pickupDate) /
+      (dayjs(reservationDetails.returnDate) -
+        dayjs(reservationDetails.pickupDate)) /
         (1000 * 3600 * 24) +
       1;
     console.log(`Duration: ${duration}`);
@@ -66,7 +66,10 @@ export function ReservationView({ location, setLocation }) {
       `Reservation details step completed: ${clientDetails.firstName}\n${clientDetails.lastName}\n${clientDetails.email}\n${clientDetails.phone}`
     );
     setReservationDetails(draft => {
-      draft.clientDetails = clientDetails;
+      //Copy client details to the reservation object
+      for (var prop in clientDetails) {
+        draft[prop] = clientDetails[prop];
+      }
     });
 
     setCurrentView("reservation_summary");
@@ -87,7 +90,11 @@ export function ReservationView({ location, setLocation }) {
         />
       )}
       {currentView == "car_select" && (
-        <CarSelection handleNext={handleCarSelectionStepCompleted} />
+        <CarSelection
+          handleNext={handleCarSelectionStepCompleted}
+          pickupDate={reservationDetails.pickupDate}
+          returnDate={reservationDetails.returnDate}
+        />
       )}
       {currentView == "client_details" && (
         <ReservationDetails

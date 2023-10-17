@@ -12,6 +12,16 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<TeslaRentApiContext>(opt =>
     opt.UseInMemoryDatabase("TeslaRent"));
 
+builder.Services.AddCors(opt => {
+    opt.AddDefaultPolicy(
+        policy =>
+        {
+            policy.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback);
+            policy.AllowAnyHeader()
+            .AllowAnyMethod();
+        });
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -37,6 +47,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 
