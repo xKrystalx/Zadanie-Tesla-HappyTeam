@@ -33,7 +33,7 @@ export function Location() {
             <img src={MallorcaMap} className="opacity-[0.35] w-[100vmin]" />
             {locations &&
               locations.map(loc => {
-                let markerData = RentLocations.find(i => i.id == loc.id);
+                const markerData = RentLocations.find(i => i.id == loc.id);
                 if (!markerData) return;
                 return (
                   <Marker

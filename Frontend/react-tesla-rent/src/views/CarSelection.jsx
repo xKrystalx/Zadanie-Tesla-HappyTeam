@@ -39,8 +39,8 @@ export function CarSelection({ handleNext, pickupDate, returnDate }) {
       <div className="flex flex-wrap gap-6 justify-center h-fit">
         {cars &&
           cars.map(car => {
-            let isAvailable = car.available > 0;
-            let isSelected =
+            const isAvailable = car.available > 0;
+            const isSelected =
               car.id === selectedCar?.id
                 ? "bg-gray-200 border-2 border-red-600"
                 : "";
