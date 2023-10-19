@@ -54,7 +54,7 @@
 
 > API routes and methods
 
-- Serve only GET requests for cars and locations, POST only for reservations
+- Serve only GET requests for cars and locations, POST only for reservations _(GET for reservations enabled just for the purpose of verifying the data)_.
 
 > Validation
 
