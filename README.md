@@ -38,7 +38,7 @@
 ![Summary](https://github.com/xKrystalx/Zadanie-Tesla-HappyTeam/assets/22894343/c62bf55a-e0f3-435c-a483-5fa96527e56d)
 ![Sending request](https://github.com/xKrystalx/Zadanie-Tesla-HappyTeam/assets/22894343/f61a598e-35cb-499c-a91d-dbbc62744d44)
 
-> General
+> Miscellaneous
 
 - Reservation part of the frontend has an exit button if a user would like to select a different location or restart the process without refreshing the page entirely.
 
