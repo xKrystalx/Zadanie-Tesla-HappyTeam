@@ -5,7 +5,7 @@ export function CarSelection({ handleNext, pickupDate, returnDate }) {
   const [selectedCar, setSelectedCar] = useState(null);
   const [cars, setCars] = useState(null);
 
-  //Load locations
+  //Load available cars within the specified date range
   useEffect(() => {
     const fetchCars = async () => {
       console.log(

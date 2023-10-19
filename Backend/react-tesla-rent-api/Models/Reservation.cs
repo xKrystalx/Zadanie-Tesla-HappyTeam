@@ -73,15 +73,15 @@ public class Reservation{
     public decimal Total {get;set;}
 
     [Required]
+    [ForeignKey("Car")]
     public string CarId {get;set;}
 
-    [ForeignKey("CarId")]
-    public Car Car {get;set;} = null!;
+    public virtual Car Car {get;set;}
 
     [Required]
+    [ForeignKey("Location")]
     public string LocationId {get;set;}
 
-    [ForeignKey("LocationId")]
-    public Location Location {get;set;} = null!;
+    public virtual Location Location {get;set;}
 
 }

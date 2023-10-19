@@ -35,6 +35,7 @@ namespace react_tesla_rent_api.Controllers
                 DateOnly t_pickupDate = DateOnly.Parse(pickupDate);
                 DateOnly t_returnDate = DateOnly.Parse(returnDate);
 
+                //Check how many cars are available within the date range
                 foreach(var car in cars){
                     var unavailableCars = await _context.Reservations.CountAsync(i => 
                                                                                 car.Id == i.CarId && 

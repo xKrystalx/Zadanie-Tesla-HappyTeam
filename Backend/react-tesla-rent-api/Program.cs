@@ -1,5 +1,6 @@
 
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using react_tesla_rent_api.Models;
 
@@ -20,6 +21,9 @@ builder.Services.AddCors(opt => {
             policy.AllowAnyHeader()
             .AllowAnyMethod();
         });
+});
+builder.Services.AddControllers().AddJsonOptions(options => {
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

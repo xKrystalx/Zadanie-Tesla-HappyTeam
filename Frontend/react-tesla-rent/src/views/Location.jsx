@@ -12,7 +12,6 @@ export function Location() {
   //Load locations
   useEffect(() => {
     const fetchLocations = async () => {
-      console.log(ApiEndpoints.apiLocationsUrl);
       return await fetch(ApiEndpoints.apiLocationsUrl);
     };
 

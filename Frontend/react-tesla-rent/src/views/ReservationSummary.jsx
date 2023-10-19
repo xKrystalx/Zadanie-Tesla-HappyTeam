@@ -1,11 +1,17 @@
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import loadingSVG from "../assets/images/icons/loading.svg";
 import { ApiEndpoints } from "../helpers/ApiEndpoints";
 
 export function ReservationSummary({ reservationDetails }) {
   //sending, error, success
   const [reservationState, setReservationState] = useState("");
+
+  //Preload the loading SVG
+  useEffect(() => {
+    const loadingImg = new Image();
+    loadingImg.src = loadingSVG;
+  }, []);
 
   function handlePlaceReservation() {
     const placeReservation = async () => {
@@ -14,6 +20,7 @@ export function ReservationSummary({ reservationDetails }) {
         headers: {
           "Content-Type": "application/json",
         },
+        //API data
         body: JSON.stringify({
           firstName: reservationDetails.firstName,
           lastName: reservationDetails.lastName,

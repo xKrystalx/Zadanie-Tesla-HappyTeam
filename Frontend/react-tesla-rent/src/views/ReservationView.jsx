@@ -30,7 +30,6 @@ export function ReservationView({ location, setLocation }) {
   }, []);
 
   function handleCalendarStepCompleted(pickupDate, returnDate) {
-    console.log(`Calendar step completed: ${pickupDate} - ${returnDate}`);
     setReservationDetails(draft => {
       draft.pickupDate = dayjs(pickupDate).format("YYYY-MM-DD");
       draft.returnDate = dayjs(returnDate).format("YYYY-MM-DD");
@@ -40,19 +39,12 @@ export function ReservationView({ location, setLocation }) {
   }
 
   function handleCarSelectionStepCompleted(selectedCar) {
-    console.log(`Car selecttion step completed: ${selectedCar.name}`);
     //Calculate renting days. If returning same day, count as 1, therefore adding 1 to the difference.
     let duration =
       (dayjs(reservationDetails.returnDate) -
         dayjs(reservationDetails.pickupDate)) /
         (1000 * 3600 * 24) +
       1;
-    console.log(`Duration: ${duration}`);
-    console.log(
-      `Total: $${duration * selectedCar.price} [$${
-        selectedCar.price
-      } * ${duration} days]`
-    );
     setReservationDetails(draft => {
       draft.carId = selectedCar.id;
       draft.carName = selectedCar.name;
@@ -62,9 +54,6 @@ export function ReservationView({ location, setLocation }) {
   }
 
   function handleReservationDetailsStepCompleted(clientDetails) {
-    console.log(
-      `Reservation details step completed: ${clientDetails.firstName}\n${clientDetails.lastName}\n${clientDetails.email}\n${clientDetails.phone}`
-    );
     setReservationDetails(draft => {
       //Copy client details to the reservation object
       for (var prop in clientDetails) {
