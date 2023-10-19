@@ -6,7 +6,7 @@
 
 > Available locations
 
-- Loading location data from backend, finding related entries on the frontend side to display them.
+- Loading location data from backend, finding related entries on the frontend side to display them. By storing position of markers on the frontend, there's more flexibility in how to present the available locations.
 - From a UX standpoint using a map representation of Mallorca with markers seems like a good idea.
 
 ![Locations](https://github.com/xKrystalx/Zadanie-Tesla-HappyTeam/assets/22894343/db4a2a12-f125-4fe9-a64d-f50ea8c88a78)
@@ -43,6 +43,14 @@
 - Reservation part of the frontend has an exit button if a user would like to select a different location or restart the process without refreshing the page entirely.
 
 ## [Backend] Key considerations
+
+> Database
+
+- I went with an in-memory database for simplicity and an easy way to have a clean start.
+
+> Data seeding
+
+- For convenience and automation during development, backend is initializing the in-memory database with location and car data from JSON files on each reboot.
 
 > API routes and methods
 
